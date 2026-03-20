@@ -23,10 +23,10 @@ public class JwtUtil {
         }
     }
 
-    public String generateToken(String email) {
+    public String generateToken(String email, Long userId) {
         // 간단한 Base64 인코딩 (실제 프로젝트에서는 JWT 라이브러리 사용)
         String header = "{\"alg\":\"HS256\",\"typ\":\"JWT\"}";
-        String payload = "{\"sub\":\"" + email + "\"}";
+        String payload = "{\"sub\":\"" + email + "\",\"userId\":" + userId + "}";
 
         String encodedHeader = Base64.getEncoder().encodeToString(header.getBytes());
         String encodedPayload = Base64.getEncoder().encodeToString(payload.getBytes());
@@ -48,6 +48,26 @@ public class JwtUtil {
             return payload.split(":")[3].replace("\"", "").replace("}", "");
         } catch (Exception e) {
             throw new RuntimeException("Failed to parse token");
+        }
+    }
+
+    public Long getUserIdFromToken(String token) {
+        try {
+            String[] parts = token.split("\\.");
+            if (parts.length != 3) {
+                throw new RuntimeException("Invalid token format");
+            }
+
+            String payload = new String(Base64.getDecoder().decode(parts[1]));
+            String[] payloadParts = payload.split(",");
+            for (String part : payloadParts) {
+                if (part.contains("userId")) {
+                    return Long.parseLong(part.split(":")[1]);
+                }
+            }
+            throw new RuntimeException("User ID not found in token");
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to parse user ID from token");
         }
     }
 

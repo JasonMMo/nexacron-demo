@@ -55,7 +55,7 @@ public class AuthService {
         }
 
         // JWT 토큰 생성
-        return jwtUtil.generateToken(user.getEmail());
+        return jwtUtil.generateToken(user.getEmail(), user.getId());
     }
 
     public User getUserByEmail(String email) {

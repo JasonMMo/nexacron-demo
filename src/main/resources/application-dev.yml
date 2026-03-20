@@ -3,7 +3,9 @@ server:
   port: 9090
 
 spring:
-  profiles: dev
+  config:
+    activate:
+      on-profile: dev
 
   # DataSource 설정 (개발용 H2)
   datasource:
@@ -45,6 +47,10 @@ spring:
     serialization:
       fail-on-empty-beans: false
 
+  # JWT 설정
+  jwt:
+    secret: nexacron-demo-dev-jwt-secret-key-2024
+    expiration: 86400000
 
 # Actuator 설정 (개발 환경에서만 사용)
 management:
