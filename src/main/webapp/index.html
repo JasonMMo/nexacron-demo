@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexacro - Apple Reminders Clone</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>Nexacro</h1>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <a href="#" class="nav-link active" data-page="login">로그인</a>
+                <a href="#" class="nav-link" data-page="signup">회원가입</a>
+                <a href="#" class="nav-link" data-page="reminders">리마인더</a>
+                <a href="#" class="nav-link" data-page="categories">카테고리</a>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Login Page -->
+            <div id="login-page" class="page active">
+                <div class="auth-container">
+                    <h2>로그인</h2>
+                    <form id="login-form" class="auth-form">
+                        <div class="form-group">
+                            <label for="login-email">이메일</label>
+                            <input type="email" id="login-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">비밀번호</label>
+                            <input type="password" id="login-password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">로그인</button>
+                    </form>
+                    <p class="auth-switch">
+                        계정이 없으신가요? <a href="#" data-switch="signup">회원가입</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Signup Page -->
+            <div id="signup-page" class="page">
+                <div class="auth-container">
+                    <h2>회원가입</h2>
+                    <form id="signup-form" class="auth-form">
+                        <div class="form-group">
+                            <label for="signup-name">이름</label>
+                            <input type="text" id="signup-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-email">이메일</label>
+                            <input type="email" id="signup-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-password">비밀번호</label>
+                            <input type="password" id="signup-password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">가입하기</button>
+                    </form>
+                    <p class="auth-switch">
+                        이미 계정이 있으신가요? <a href="#" data-switch="login">로그인</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Reminders Page -->
+            <div id="reminders-page" class="page">
+                <div class="container">
+                    <h2>리마인더</h2>
+                    <div class="reminder-actions">
+                        <button id="add-reminder-btn" class="btn btn-primary">+ 새 리마인더</button>
+                        <div class="filter-controls">
+                            <select id="priority-filter">
+                                <option value="">모든 우선순위</option>
+                                <option value="HIGH">높음</option>
+                                <option value="MEDIUM">중간</option>
+                                <option value="LOW">낮음</option>
+                            </select>
+                            <input type="text" id="search-input" placeholder="검색...">
+                        </div>
+                    </div>
+                    <div id="reminders-list" class="reminders-list">
+                        <!-- Reminders will be dynamically loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories Page -->
+            <div id="categories-page" class="page">
+                <div class="container">
+                    <h2>카테고리</h2>
+                    <button id="add-category-btn" class="btn btn-primary">+ 새 카테고리</button>
+                    <div id="categories-list" class="categories-list">
+                        <!-- Categories will be dynamically loaded here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Add/Edit Reminder Modal -->
+        <div id="reminder-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3>리마인더</h3>
+                <form id="reminder-form">
+                    <div class="form-group">
+                        <label for="reminder-title">제목</label>
+                        <input type="text" id="reminder-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reminder-description">설명</label>
+                        <textarea id="reminder-description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="reminder-priority">우선순위</label>
+                        <select id="reminder-priority">
+                            <option value="LOW">낮음</option>
+                            <option value="MEDIUM" selected>중간</option>
+                            <option value="HIGH">높음</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="reminder-category">카테고리</label>
+                        <select id="reminder-category">
+                            <option value="">없음</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="reminder-due-date">기한</label>
+                        <input type="datetime-local" id="reminder-due-date">
+                    </div>
+                    <button type="submit" class="btn btn-primary">저장</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Add/Edit Category Modal -->
+        <div id="category-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3>카테고리</h3>
+                <form id="category-form">
+                    <div class="form-group">
+                        <label for="category-name">이름</label>
+                        <input type="text" id="category-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="category-description">설명</label>
+                        <textarea id="category-description"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">저장</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
