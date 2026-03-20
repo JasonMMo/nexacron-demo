@@ -1,0 +1,26 @@
+server:
+  port: 9090
+
+# Spring 설정
+spring:
+  application:
+    name: nexacron-demo
+
+  profiles:
+    active: dev
+
+  # JWT 설정
+  jwt:
+    secret: nexacron-demo-jwt-secret-key-2024
+    expiration: 86400000  # 24 hours
+
+  # Jackson 설정
+  jackson:
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSS
+    time-zone: Asia/Seoul
+    default-property-inclusion: non_null
+    serialization:
+      write-dates-as-timestamps: false
+
+  
+
